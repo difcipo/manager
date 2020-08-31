@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cai.mapper.LastpushMapper">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <select id="getPushList" resultType="BLastpush">
+        select * from (SELECT * from b_lastpush limit #{start},#{last}) as blimit ORDER  by time DESC
+    </select>
+    
+    <select id="totalTimes" resultType="Integer">
+        select count(*) from b_lastpush;
+    </select>
+
+    <select id="getHot" resultType="BLastpush">
+        select * from b_lastpush WHERE  hot = 1;
+    </select>
+    
+    <select id="getPush" resultType="BLastpush" parameterType="Integer">
+        SELECT * FROM b_lastpush WHERE id=#{id}
+    </select>
+
+
+
+</mapper>
