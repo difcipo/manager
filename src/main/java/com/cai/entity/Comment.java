@@ -9,12 +9,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-
-    private int id;
-    private String userName;
-    private String password;
-    private String addr;
-    private Date regtime;
-    private String headimg;
+public class Comment {
+    private User user;
+    private String comment;
+    private Date time;
+    private String expression;
 }
