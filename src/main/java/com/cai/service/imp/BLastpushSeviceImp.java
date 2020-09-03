@@ -51,4 +51,14 @@ public class BLastpushSeviceImp implements BLastpushService {
     public List<BLastpush> getHot() {
         return lastpushMapper.getHot();
     }
+
+    @Override
+    public List<BLastpush> getPushByColumn(int id) {
+        return lastpushMapper.getPushByColumn(id);
+    }
+
+    @Override
+    public int getTotalSizeCol(int id) {
+        return lastpushMapper.getTotalSizeCol(id);
+    }
 }

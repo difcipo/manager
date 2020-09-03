@@ -27,53 +27,9 @@
 </head>
 
 <body class="user-select single">
-<header class="header">
-  <nav class="navbar navbar-default" id="navbar">
-    <div class="container">
-      <div class="header-topbar hidden-xs link-border">
-        <ul class="site-nav topmenu">
-          <li><a href="tags.html">标签云</a></li>
-          <li><a href="readers.html" rel="nofollow">读者墙</a></li>
-          <li><a href="links.html" rel="nofollow">友情链接</a></li>
-          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" rel="nofollow">关注本站 <span class="caret"></span></a>
-            <ul class="dropdown-menu header-topbar-dropdown-menu">
-              <li><a data-toggle="modal" data-target="#WeChat" rel="nofollow"><i class="fa fa-weixin"></i> 微信</a></li>
-              <li><a href="#" rel="nofollow"><i class="fa fa-weibo"></i> 微博</a></li>
-              <li><a data-toggle="modal" data-target="#areDeveloping" rel="nofollow"><i class="fa fa-rss"></i> RSS</a></li>
-            </ul>
-          </li>
-        </ul>
+<header class="header" th:include="header::nav">
+    <!-- 头部文件 -->
 
-        <span th:if="${session.user1==null}">
-          <a data-toggle="modal" data-target="#loginModal" class="login" rel="nofollow">Hi,请登录</a>&nbsp;&nbsp;<a data-toggle="modal" data-target="#logoutModal"href="javascript:;" class="register" rel="nofollow">我要注册</a>&nbsp;&nbsp;<a href="" rel="nofollow">找回密码</a>
-        </span>
-        <span th:if="${session.user1!=null}">
-          <a data-toggle="modal" data-target="#loginModal" class="login" rel="nofollow">欢迎&nbsp;[[${session.user1.userName}]]</a>&nbsp;&nbsp;<a href="/logout" class="register" rel="nofollow">注销</a>
-        </span>
-
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar" aria-expanded="false"> <span class="sr-only"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-        <h1 class="logo hvr-bounce-in"><a href="" title=""><img src="images/logo.png" alt=""></a></h1>
-      </div>
-      <div class="collapse navbar-collapse" id="header-navbar">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="hidden-index active"><a data-cont="异清轩首页" href="index.html">异清轩首页</a></li>
-          <li><a href="category.html">前端技术</a></li>
-          <li><a href="category.html">后端程序</a></li>
-          <li><a href="category.html">管理系统</a></li>
-          <li><a href="category.html">授人以渔</a></li>
-          <li><a href="category.html">程序人生</a></li>
-        </ul>
-        <form class="navbar-form visible-xs" action="/Search" method="post">
-          <div class="input-group">
-            <input type="text" name="keyword" class="form-control" placeholder="请输入关键字" maxlength="20" autocomplete="off">
-            <span class="input-group-btn">
-            <button class="btn btn-default btn-search" name="search" type="submit">搜索</button>
-            </span> </div>
-        </form>
-      </div>
-    </div>
-  </nav>
 </header>
 <section class="container">
   <div class="content-wrap">
@@ -85,9 +41,9 @@
           </span>
           <span class="item article-meta-source" data-toggle="tooltip" data-placement="bottom" th:attr="title='来源：'+${push.from}" title="来源：第一PHP社区">
             <i class="glyphicon glyphicon-globe"></i> [[${push.from}]]</span>
-          <span class="item article-meta-category" data-toggle="tooltip" data-placement="bottom" th:attr="title='栏目：'+${push.column}" title="栏目：后端程序">
+          <span class="item article-meta-category" data-toggle="tooltip" data-placement="bottom" th:attr="title='栏目：'+${push.col}" title="栏目：后端程序">
             <i class="glyphicon glyphicon-list"></i>
-            <a href="program" title="" th:text="${push.column}"></a>
+            <a href="program" title="" th:text="${push.col}"></a>
           </span>
           <span class="item article-meta-views" data-toggle="tooltip" data-placement="bottom" th:attr="title='查看：'+${push.count}" title="查看：120">
             <i class="glyphicon glyphicon-eye-open"></i> 共[[${push.count}]]人围观</span>
@@ -129,39 +85,25 @@
         </div>
       </div>-->
       <div id="respond">
-        <form action="" method="post" id="comment-form">
+        <form th:if="${session.user1 != null}" th:action="@{/toComment(id=${id})}" method="post">
+
           <div class="comment">
-            <div class="comment-title"><img class="avatar" src="images/icon/icon.png" alt="" /></div>
+            <div class="comment-title"><img class="avatar" th:src="${session.user1.headimg}" alt="" /></div>
             <div class="comment-box">
               <textarea placeholder="您的评论可以一针见血" name="comment" id="comment-textarea" cols="100%" rows="3" tabindex="1" ></textarea>
-              <div class="comment-ctrl"> <span class="emotion"><img src="images/face/5.png" width="20" height="20" alt="" />表情</span>
-                <div class="comment-prompt"> <i class="fa fa-spin fa-circle-o-notch"></i> <span class="comment-prompt-text"></span> </div>
+              <!--<div class="comment-ctrl"> <span class="emotion"><img src="images/face/5.png" width="20" height="20" alt="" />表情</span>-->
+                <!--<div class="comment-prompt"> <i class="fa fa-spin fa-circle-o-notch"></i> <span class="comment-prompt-text"></span> </div>-->
                 <input type="hidden" value="1" class="articleid" />
-                <button type="submit" name="comment-submit" id="comment-submit" tabindex="5" articleid="1">评论</button>
-              </div>
+                <input type="submit"  value="评论">
+                <!--<button type="submit"   tabindex="5" articleid="1"></button>-->
+              <!--</div>-->
             </div>
           </div>
         </form>
+        <div th:if="${session.user1 == null}">请登录后再评论</div>
       </div>
-      <div id="postcomments">
-        <ol class="commentlist">
-          <li class="comment-content"><span class="comment-f">#1</span>
-            <div class="comment-avatar"><img class="avatar" src="images/icon/icon.png" alt="" /></div>
-            <div class="comment-main">
-              <p>来自<span class="address">河南郑州</span>的用户<span class="time">(2016-01-06)</span><br />
-                这是匿名评论的内容这是匿名评论的内容，这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容。</p>
-            </div>
-          </li>
-        </ol>
-        
-        <div class="quotes">
-          <span class="disabled">首页</span>
-          <span class="disabled">上一页</span>
-          <a th:attr="class=${}" class="current">1</a>
-          <a href="">2</a>
-          <span class="disabled">下一页</span>
-          <span class="disabled">尾页</span>
-        </div>
+      <div  th:replace="comment::com">
+          <!--评论区-->
       </div>
     </div>
   </div>
@@ -218,8 +160,8 @@
     <div class="widget widget_hot">
       <h3>热门文章</h3>
       <ul>
-        <li>
-          <a href="" th:each="hot : ${hots}">
+        <li th:each="hot : ${hots}">
+          <a th:href="@{/toArticle(id=${hot.id})}">
             <span class="thumbnail">
               <img class="thumb" th:attr="data-original=${hot.img}" th:src="${hot.img}" alt=""></span>
             <span class="text" th:text="${hot.title}">php如何判断一个日期的格式是否正确</span>
@@ -227,19 +169,12 @@
             <span class="muted"><i class="glyphicon glyphicon-eye-open"></i> [[${hot.count}]]</span>
           </a>
         </li>
-        <!--<li><a href=""><span class="thumbnail"><img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt=""></span><span class="text">php如何判断一个日期的格式是否正确</span><span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span><span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span></a></li>-->
-        <!--<li><a href=""><span class="thumbnail"><img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt=""></span><span class="text">php如何判断一个日期的格式是否正确</span><span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span><span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span></a></li>-->
-        <!--<li><a href=""><span class="thumbnail"><img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt=""></span><span class="text">php如何判断一个日期的格式是否正确</span><span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span><span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span></a></li>-->
-        <!--<li><a href=""><span class="thumbnail"><img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt=""></span><span class="text">php如何判断一个日期的格式是否正确</span><span class="muted"><i class="glyphicon glyphicon-time"></i> 2016-1-4 </span><span class="muted"><i class="glyphicon glyphicon-eye-open"></i> 120</span></a></li>-->
       </ul>
     </div>
   </aside>
 </section>
-<footer class="footer">
-  <div class="container">
-    <p>&copy; 2016 <a href="">ylsat.com</a> &nbsp; <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">豫ICP备20151109-1</a> &nbsp; <a href="sitemap.xml" target="_blank" class="sitemap">网站地图</a></p>
-  </div>
-  <div id="gotop"><a class="gotop"></a></div>
+<footer class="footer" th:include="footer::foot">
+
 </footer>
 <!--微信二维码模态框-->
 <div class="modal fade user-select" id="WeChat" tabindex="-1" role="dialog" aria-labelledby="WeChatModalLabel">
@@ -271,32 +206,9 @@
   </div>
 </div>
 
-<!--登录注册模态框-->
-<div class="modal fade user-select" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <form action="/toLogin" method="post">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="loginModalLabel">登录</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="loginModalUserNmae">用户名</label>
-            <input name="userName" type="text" class="form-control" id="loginModalUserNmae" placeholder="请输入用户名" autofocus maxlength="15" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label for="loginModalUserPwd">密码</label>
-            <input name="password" type="password" class="form-control" id="loginModalUserPwd" placeholder="请输入密码" maxlength="18" autocomplete="off">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <button type="submit" class="btn btn-primary">登录</button>
-        </div>
-      </form>
-    </div>
-  </div>
+
+<div th:replace="login::login">
+  <!--登录注册模态框-->
 </div>
 
 <div id="rightClickMenu">
@@ -312,14 +224,17 @@
 <script th:src="@{~/js/jquery.ias.js}"></script>
 <script th:src="@{~/js/scripts.js}"></script>
 <script th:src="@{~/js/jquery.qqFace.js}"></script>
-<script type="text/javascript">
+<script th:if="${session.user1!=null}" type="text/javascript">
 $(function(){
 	$('.emotion').qqFace({
 		id : 'facebox', 
 		assign:'comment-textarea', 
 		path:'/Home/images/arclist/'	//表情存放的路径
 	});
- });   
+ });
+</script>
+<script th:replace="login::ajaxscript">
+
 </script>
 </body>
 </html>

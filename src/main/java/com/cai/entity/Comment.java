@@ -4,14 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
-    private User user;
+    private int id;
     private String comment;
-    private Date time;
+    private String time;
     private String expression;
+    private int userid;
+    private int articleid;
+    private User user;
+//    private String userName;
+//    private String addr;
+//    private String headimg;
 }

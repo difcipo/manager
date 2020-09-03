@@ -2,8 +2,10 @@ package com.cai.controller;
 
 import com.cai.entity.User;
 import com.cai.service.UserService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,6 +46,16 @@ public class UserController {
 //        String s = Arrays.toString(split);
         userService.addUser(user);
         return "redirect:/pushList";
+    }
+
+    @RequestMapping("/ajaxUser")
+    @ResponseBody
+    public String ajaxUser(Model model,String username){
+        User user = userService.ajaxUser(username);
+        if(user!=null){
+            return "success";
+        }
+        return "false";
     }
 
 }

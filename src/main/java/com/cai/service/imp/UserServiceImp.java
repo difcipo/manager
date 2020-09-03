@@ -46,4 +46,9 @@ public class UserServiceImp implements UserService{
 
         return userMapper.addUser(user);
     }
+
+    @Override
+    public User ajaxUser(String username) {
+        return userMapper.ajaxUser(username);
+    }
 }

@@ -3,13 +3,42 @@
 <mapper namespace="com.cai.mapper.CommentMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <select id="getCommentCount" resultType="Integer">
-        select COUNT(*) from b_comment
+    <select id="getCommentCount" resultType="Integer" parameterType="Integer">
+        select COUNT(*) from b_comment WHERE articleid=#{id}
     </select>
 
-    <select id="getCommentList" resultType="Comment">
-        SELECT * from b_comment
+    <select id="getCommentList" resultType="Comment" resultMap="getComments">
+       SELECT * from b_comment bc,b_user bu
+            where bc.userid = bu.uid
+              AND bc.articleid=#{id}
     </select>
+    <resultMap id="getComments" type="c">
+        <result column="id" property="id"/>
+        <result column="comment" property="comment"/>
+        <result column="time" property="time"/>
+        <result column="expression" property="expression"/>
+        <result column="userid" property="userid"/>
+        <result column="articleid" property="articleid"/>
+        <association property="user" javaType="u">
+            <result property="uid" column="uid"/>
+            <result property="userName" column="userName"/>
+            <result property="password" column="password"/>
+            <result property="addr" column="addr"/>
+            <result property="regtime" column="regtime"/>
+            <result property="headimg" column="headimg"/>
+        </association>
+    </resultMap>
+
+    <insert id="addComment" parameterType="Comment">
+        INSERT  into b_comment(comment,time,expression,userid,articleid)
+          VALUES (
+            #{comment.comment},
+            #{comment.time},
+            #{comment.expression},
+            #{comment.userid},
+            #{comment.articleid}
+          )
+    </insert>
 
 
 

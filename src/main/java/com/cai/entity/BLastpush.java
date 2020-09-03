@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class BLastpush {
     private int id;
     private String title;
-    private String column;
+    private int col;
     private String time;
     private int count;
     private String content;

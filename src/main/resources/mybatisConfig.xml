@@ -6,4 +6,8 @@
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
+    <typeAliases>
+        <typeAlias type="com.cai.entity.Comment" alias="c"/>
+        <typeAlias type="com.cai.entity.User" alias="u"/>
+    </typeAliases>
 </configuration>

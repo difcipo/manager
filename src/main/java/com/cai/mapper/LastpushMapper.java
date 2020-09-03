@@ -22,4 +22,7 @@ public interface LastpushMapper {
 
     List<BLastpush> getHot();
 
+    List<BLastpush> getPushByColumn(@Param("id") int id);
+
+    int getTotalSizeCol(@Param("id") int id);
 }

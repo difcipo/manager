@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="modal fade user-select" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" th:fragment="login">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/toLogin" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" id="xx">&times;</span></button>
+                    <h4 class="modal-title" id="loginModalLabel">登录</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="loginModalUserNmae">用户名</label>
+                        <input value="" name="userName" type="text" class="form-control" id="loginModalUserNmae" placeholder="请输入用户名" autofocus maxlength="15" autocomplete="off">
+                    </div>
+                    <span style="color: red;" id="error"></span>
+                    <div class="form-group">
+                        <label for="loginModalUserPwd">密码</label>
+                        <input name="password" type="password" class="form-control" id="loginModalUserPwd" placeholder="请输入密码" maxlength="18" autocomplete="off">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:fragment="ajaxscript">
+    $("#loginModalUserNmae").blur(function () {
+        $.ajax({
+            url:'/ajaxUser',
+            data:{username:$("#loginModalUserNmae").val()},
+            async:true,
+            success:function(data){
+                if(data=='success'){
+                    $("#error").html("");
+                }else{
+                    $("#error").html("用户不存在");
+                }
+
+            },
+            error:function (data) {
+
+            }
+        })
+    })
+    $("#loginModalUserNmae").focus(function () {
+        $("#error").html("");
+    })
+    $("#cancel").click(function () {
+        $("#error").html("");
+    })
+    $("#xx").click(function () {
+        $("#error").html("");
+    })
+</script>
+</body>
+</html>

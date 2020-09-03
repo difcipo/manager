@@ -11,4 +11,8 @@
         INSERT  INTO b_user(user_name,password) VALUES (#{user.userName},#{user.password})
     </insert>
 
+    <select id="ajaxUser" resultType="User" parameterType="java.lang.String">
+        SELECT * FROM b_user WHERE user_name=#{username}
+    </select>
+
 </mapper>

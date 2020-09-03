@@ -15,12 +15,17 @@ public class CommentServiceImp implements CommentService{
     private CommentMapper commentMapper;
 
     @Override
-    public int getCommentCount() {
-        return commentMapper.getCommentCount();
+    public int getCommentCount(int id) {
+        return commentMapper.getCommentCount(id);
     }
 
     @Override
-    public List<Comment> getCommentList() {
-        return commentMapper.getCommentList();
+    public List<Comment> getCommentList(int id) {
+        return commentMapper.getCommentList(id);
+    }
+
+    @Override
+    public void addComment(Comment comment) {
+        commentMapper.addComment(comment);
     }
 }

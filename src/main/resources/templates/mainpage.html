@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="title" th:fragment="title">
+    <h3>后端程序</h3>
+</div>
+
+<div class="title" th:fragment="lastnews">
+    <h3>最新发布</h3>
+    <div class="more"><a href="">PHP</a><a href="">JavaScript</a><a href="">EmpireCMS</a><a href="">Apache</a><a href="">MySQL</a></div>
+</div>
+<article th:each=" push : ${pushList}" class="excerpt excerpt-1" th:fragment="article">
+    <a class="focus" th:href="@{/toArticle(id=${push.id})}" title="">
+        <img class="thumb" th:src="${push.getImg()}" alt="">
+    </a>
+    <header>
+        <a class="cat" href="program" th:if="${push.col==2}" th:text="前端程序"><i></i></a>
+        <a class="cat" href="program" th:if="${push.col==3}" th:text="后端程序"><i></i></a>
+        <h2><a th:href="@{/toArticle(id=${push.id})}" title="">[[ ${push.title} ]]</a></h2>
+    </header>
+    <p class="meta">
+        <time class="time"><i class="glyphicon glyphicon-time"></i> [[ ${push.time} ]]</time>
+        <span class="views"><i class="glyphicon glyphicon-eye-open"></i> 共[[ ${push.count} ]]人围观</span> <a class="comment" href="article.html#comment"><i class="glyphicon glyphicon-comment"></i> [[ ${push.noview} ]]个不明物体</a></p>
+    <p class="note">[[ ${push.desc} ]]</p>
+</article>
+
+<nav class="pagination" th:fragment="nav">
+    <ul>
+        <li th:if="${currentPage != 1}" class="prev-page"><a th:href="@{/pushList(currentPage=${currentPage - 1})}">上一页</a></li>
+        <li th:attr="class=${currentPage==num?'active':''}" th:each="num:${#numbers.sequence(1, totalPage)}">
+            <span><a th:href="@{/pushList(currentPage=${num})}">[[${num}]]</a></span>
+        </li>
+        <li th:if="${currentPage!=totalPage}" class="next-page"><a th:href="@{/pushList(currentPage=${currentPage + 1})}">下一页</a></li>
+        <li><span>共 [[${totalPage}]] 页</span></li>
+    </ul>
+</nav>
+
+</body>
+</html>

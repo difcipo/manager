@@ -19,4 +19,6 @@ public interface UserMapper {
     int updateUser(User user);
 
     int addUser(@Param("user") User user);
+
+    User ajaxUser(@Param("username") String username);
 }

@@ -19,6 +19,13 @@
         SELECT * FROM b_lastpush WHERE id=#{id}
     </select>
 
+    <select id="getPushByColumn" resultType="BLastpush" parameterType="Integer">
+        SELECT * FROM b_lastpush WHERE col = #{id}
+    </select>
+    
+    <select id="getTotalSizeCol" resultType="Integer" parameterType="Integer">
+        select COUNT(*) from b_lastpush WHERE col = #{id}
+    </select>
 
 
 </mapper>
